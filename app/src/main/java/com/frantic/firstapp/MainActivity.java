@@ -1,5 +1,6 @@
 package com.frantic.firstapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bCancelParams = (LinearLayout.LayoutParams) bCancel.getLayoutParams();
         btn1Params = (LinearLayout.LayoutParams) btn1.getLayoutParams();
         btn2Params = (LinearLayout.LayoutParams) btn2.getLayoutParams();
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
 
         seekBar = (SeekBar) findViewById(R.id.sbWeight);
         seekBar.setOnSeekBarChangeListener(this);
@@ -255,6 +258,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(tag,"нажал Out");
                 Toast.makeText(this,"Нажал Out", Toast.LENGTH_SHORT ).show();
                 textView.setText("push Out");
+                break;
+            case R.id.btn1:
+                Log.d(tag, "Нажата кнопка btn1");
+                Intent intent = new Intent(this, SecondActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn2:
+                Log.d(tag, "Нажата кнопка btn2");
                 break;
         }
     }
