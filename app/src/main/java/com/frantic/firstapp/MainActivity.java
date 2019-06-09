@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -21,9 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView textView, textView2;
     CheckBox checkBox;
-    Button bOk;
-    Button bCancel;
-    Button bOut;
+    Button bOk, bCancel, bOut, btn1, btn2;
     RadioGroup rgGravity;
     LinearLayout llMain;
     SeekBar seekBar;
@@ -36,11 +36,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final int MENU_SIZE_26 = 5;
     final int MENU_SIZE_30 = 6;
 
+    // константы для ID пунктов меню
+    final int MENU_ALPHA_ID = 7;
+    final int MENU_SCALE_ID = 8;
+    final int MENU_TRANSLATE_ID = 9;
+    final int MENU_ROTATE_ID = 10;
+    final int MENU_COMBO_ID = 11;
+
     private static final String tag = "frantic_log";
     int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
 
     LinearLayout.LayoutParams bOkParams;
     LinearLayout.LayoutParams bCancelParams;
+
+    LinearLayout.LayoutParams btn1Params;
+    LinearLayout.LayoutParams btn2Params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bOut = (Button) findViewById(R.id.button2);
         bOut.setBackgroundResource(R.color.llBottomColor);
 
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+
         bOk.setOnClickListener(this);
         bOut.setOnClickListener(this);
 
@@ -82,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bOkParams = (LinearLayout.LayoutParams) bOk.getLayoutParams();
         bCancelParams = (LinearLayout.LayoutParams) bCancel.getLayoutParams();
+        btn1Params = (LinearLayout.LayoutParams) btn1.getLayoutParams();
+        btn2Params = (LinearLayout.LayoutParams) btn2.getLayoutParams();
 
         seekBar = (SeekBar) findViewById(R.id.sbWeight);
         seekBar.setOnSeekBarChangeListener(this);
@@ -102,12 +117,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 menu.add(0, MENU_COLOR_RED, 0, "Red");
                 menu.add(0, MENU_COLOR_GREEN, 0, "Green");
                 menu.add(0, MENU_COLOR_BLUE, 0, "Blue");
+
+                menu.add(0, MENU_ALPHA_ID, 0, "alpha");
+                menu.add(0, MENU_SCALE_ID, 0, "scale");
+                menu.add(0, MENU_TRANSLATE_ID, 0, "translate");
+                menu.add(0, MENU_ROTATE_ID, 0, "rotate");
+                menu.add(0, MENU_COMBO_ID, 0, "combo");
                 break;
             case R.id.textView2:
                 Log.d(tag, "textview - 1");
                 menu.add(0, MENU_SIZE_22, 0, "22");
                 menu.add(0, MENU_SIZE_26, 0, "26");
                 menu.add(0, MENU_SIZE_30, 0, "30");
+                break;
+            case R.id.sbWeight:
+                Log.d(tag, "seekbar menu");
                 break;
         }
 
@@ -124,9 +148,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
 
         switch (item.getItemId()){
+            case R.id.menu_edit:
+                finish();
+                break;
             case R.id.menu_delete:
                 int count = llMain.getChildCount();
-                if(count <= 2)break;
+                if(count <= 3)break;
                 else{
                     llMain.removeViewAt(count-1);
                 }
@@ -167,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
+        Animation anim = null;
         switch (item.getItemId()){
             case MENU_COLOR_BLUE:
                 textView.setText("Color is BLUE");
@@ -193,7 +220,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textView.setText("Size is 30");
                 textView.setTextSize(30);
                 break;
+            case MENU_ALPHA_ID:
+                // создаем объект анимации из файла anim/myalpha
+                anim = AnimationUtils.loadAnimation(this, R.anim.first_alpha);
+                break;
+            case MENU_SCALE_ID:
+                anim = AnimationUtils.loadAnimation(this, R.anim.first_scale);
+                break;
+            case MENU_TRANSLATE_ID:
+                anim = AnimationUtils.loadAnimation(this, R.anim.first_trans);
+                break;
+            case MENU_ROTATE_ID:
+                anim = AnimationUtils.loadAnimation(this, R.anim.first_rotate);
+                break;
+            case MENU_COMBO_ID:
+                anim = AnimationUtils.loadAnimation(this, R.anim.first_combo);
+                break;
         }
+
+        btn2.startAnimation(anim);
 
         return super.onContextItemSelected(item);
     }
@@ -227,11 +272,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bOkParams.weight = leftValue;
         bCancelParams.weight = rightValue;
 
+        btn1Params.weight = leftValue;
+        btn2Params.weight = rightValue;
+
         bOk.requestLayout();
         bCancel.requestLayout();
 
+        btn1.requestLayout();
+        btn2.requestLayout();
+
         bOk.setText(Integer.toString(leftValue));
         bCancel.setText(Integer.toString(rightValue));
+
+        btn1.setText(Integer.toString(leftValue));
+        btn2.setText(Integer.toString(rightValue));
     }
 
     @Override
