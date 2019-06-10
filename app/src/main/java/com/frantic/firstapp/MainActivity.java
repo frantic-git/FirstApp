@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    TextView textView, textView2;
+    TextView textView, textView2, tvFirstName, tvLastName;
     CheckBox checkBox;
     Button bOk, bCancel, bOut, btn1, btn2;
     RadioGroup rgGravity;
@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView2 = (TextView) findViewById(R.id.textView2);
         textView2.setText("Anti-Vedroid");
+
+        tvFirstName = (TextView) findViewById(R.id.tvFirstName);
+        tvLastName = (TextView) findViewById(R.id.tvLastName);
 
         registerForContextMenu(textView);
         registerForContextMenu(textView2);
@@ -265,8 +268,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.btn2:
-                Log.d(tag, "Нажата кнопка btn2");
-                break;
+                switch (rgGravity.getCheckedRadioButtonId()){
+                    case  R.id.rbLeft:
+                        Log.d(tag, "Нажата кнопка btn2 и выбран left action");
+                        Intent intentShowLeft = new Intent("com.frantic.firstapp.showleft");
+                        intentShowLeft.putExtra("firstName", tvFirstName.getText().toString());
+                        intentShowLeft.putExtra("lastName", tvLastName.getText().toString());
+                        startActivity(intentShowLeft);
+                        break;
+                    case R.id.rbRight:
+                        Log.d(tag, "Нажата кнопка btn2 и выбран right action");
+                        Intent intentShowRight = new Intent("com.frantic.firstapp.showright");
+                        startActivity(intentShowRight);
+                        break;
+                    case R.id.rbCenter:
+                        Intent intentShowCenter = new Intent(this, FourthActivity.class);
+                        intentShowCenter.putExtra("firstName", tvFirstName.getText().toString());
+                        intentShowCenter.putExtra("lastName", tvLastName.getText().toString());
+                        startActivity(intentShowCenter);
+                }
+            break;
         }
     }
 

@@ -140,6 +140,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="372dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -155,21 +156,78 @@
         app:layout_constraintVertical_bias="0.064">
 
         <Button
-            android:layout_height="wrap_content"
             android:id="@+id/btn1"
-            android:text="Button1"
-            android:layout_weight="1"
-            android:layout_width="wrap_content">
-        </Button>
-        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn2"
-            android:text="Button2"
             android:layout_weight="1"
-            android:layout_width="wrap_content">
-        </Button>
+            android:text="Button1"></Button>
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button2"></Button>
 
     </LinearLayout>
+
+    <TableLayout
+        android:layout_width="384dp"
+        android:layout_height="209dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:stretchColumns="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.082">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/TextViewFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="First Name"
+                android:layout_marginLeft="30dp"></TextView>
+
+            <EditText
+                android:id="@+id/tvFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:inputType="textPersonName">
+
+                <requestFocus></requestFocus>
+            </EditText>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/TextViewLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Name"
+                android:layout_marginLeft="30dp"></TextView>
+
+            <EditText
+                android:id="@+id/tvLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:inputType="textPersonName"></EditText>
+        </TableRow>
+    </TableLayout>
 
 
 </android.support.constraint.ConstraintLayout>
