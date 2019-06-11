@@ -285,10 +285,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Intent intentShowCenter = new Intent(this, FourthActivity.class);
                         intentShowCenter.putExtra("firstName", tvFirstName.getText().toString());
                         intentShowCenter.putExtra("lastName", tvLastName.getText().toString());
-                        startActivity(intentShowCenter);
+                        //startActivity(intentShowCenter);
+                        startActivityForResult(intentShowCenter, 1);
                 }
             break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null)return;
+        String name = data.getStringExtra("name");
+        textView.setText("Your name is " + name);
     }
 
     public void onClickStart(View v){
